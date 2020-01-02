@@ -72,7 +72,7 @@ def parse_args() -> object:
     # Mandatory arguments
     group = p.add_mutually_exclusive_group(required=True)
     group.add_argument('--subnet',
-                       help="Generates automatically the value of [Interface][Address]")
+                       help="Automatically generates the value of [Interface][Address] based on already affected IP addresses")
     group.add_argument('--address',
                        help="[Interface][Address] value")
     p.add_argument('--endpoint',
