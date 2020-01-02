@@ -166,6 +166,13 @@ def main():
     if args.subnet is not None:
         interface_address = first_available_ip_from_subnet(args)
 
+    interface_address = interface_address.replace(' ', '')
+
+    if args.auto_add is False:
+        print("# Run the following command to add this newly created peer")
+        print(
+            f"# {args.wg_binary} set {args.wg_interface} peer '{pubkey}' allowed-ips '{interface_address}'\n\n")
+
     config = generate_configuration(
         args,
         privkey=privkey,
@@ -177,6 +184,14 @@ def main():
         generate_qrcode(args, config)
     else:
         print(config)
+
+    if args.auto_add is True:
+        subprocess.Popen([
+            args.wg_binary, "set", args.wg_interface, "peer",
+            pubkey, "allowed-ips", interface_address
+        ])
+        subprocess.Popen([
+            args.wg_binary, "show", args.wg_interface])
 
 
 if __name__ == "__main__":
