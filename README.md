@@ -75,6 +75,7 @@ optional arguments:
   --subnet SUBNET       Automatically generates the value of
                         [Interface][Address] based on already affected IP
                         addresses
+  --address ADDRESS     [Interface][Address] value
   --endpoint ENDPOINT   [Peer][Endpoint] value
   --privkey PRIVKEY     [Interface][PrivateKey] value
   --dns DNS             [Interface][DNS] value
@@ -89,8 +90,8 @@ optional arguments:
                         Path to qrencode binary (default = qrencode)
   --wg-interface WG_INTERFACE
                         WireGuard interface (default = wg0)
-  --qr                  Output the configuration as a QRcode instead of stdout
-  --auto-add            Execute 'wg set [WG_INTERFACE] [PUBKEY] allowd-ips
+  --qr                  Outputs the configuration as a QRcode instead of
+                        stdout
+  --auto-add            Executes 'wg set [WG_INTERFACE] [PUBKEY] allowd-ips
                         [ALLOWED_IPS]' with the generated data
-
 ```
