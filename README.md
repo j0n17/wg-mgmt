@@ -11,12 +11,12 @@ Optionnaly, you'll need `qrencode` (if `--qr` argument is specified)
 
 Using wget
 ```sh
-$> wget https://raw.githubusercontent.com/j0n17/wg-mgmt/master/wg_mgmt.py
+$ wget https://raw.githubusercontent.com/j0n17/wg-mgmt/master/wg_mgmt.py
 ```
 
 Using curl
 ```sh
-$> curl -o wg_mgmt.py https://raw.githubusercontent.com/j0n17/wg-mgmt/master/wg_mgmt.py
+$ curl -o wg_mgmt.py https://raw.githubusercontent.com/j0n17/wg-mgmt/master/wg_mgmt.py
 ```
 
 
@@ -25,7 +25,7 @@ $> curl -o wg_mgmt.py https://raw.githubusercontent.com/j0n17/wg-mgmt/master/wg_
 
 ```sh
 # Display what to do in order to create add a new peer
-$> python3 wg_mgmt.py --subnet 10.10.0.0/24,fd86:ea04:1111::/64 --endpoint example.org:51280
+$ python3 wg_mgmt.py --subnet 10.10.0.0/24,fd86:ea04:1111::/64 --endpoint example.org:51280
 # Run the following command to add this newly created peer
 # wg set wg0 peer 'mgNpWHZe1a4irAyp/x2Fz1Psz19Rf+e0T5GZPLgKFho=' allowed-ips '10.10.0.4/32,fd86:ea04:1111::4/128'
 
@@ -44,7 +44,7 @@ AllowedIPs = 0.0.0.0/0,::/0
 
 
 # If you need to manually specify the IP addresses used
-$> python3 wg_mgmt.py --address 10.10.0.4/32,fd86:ea04:1111::3/128 --endpoint example.org:51280
+$ python3 wg_mgmt.py --address 10.10.0.4/32,fd86:ea04:1111::3/128 --endpoint example.org:51280
 # Run the following command to add this newly created peer
 # wg set wg0 peer 'JTOE9DRu4jfCjpBzUl5rXZZJBHdtd2ZRx/m+uiCxPV8=' allowed-ips '10.10.0.4/32,fd86:ea04:1111::3/128'
 
@@ -62,7 +62,7 @@ AllowedIPs = 0.0.0.0/0,::/0
 
 
 ```sh
-$> python3 wg_mgmt.py -h
+$ python3 wg_mgmt.py -h
 usage: wg_mgmt.py [-h] (--subnet SUBNET | --address ADDRESS) --endpoint
                   ENDPOINT [--privkey PRIVKEY] [--dns DNS]
                   [--keep-alive KEEP_ALIVE] [--mtu MTU]
