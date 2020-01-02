@@ -110,13 +110,13 @@ def parse_args() -> object:
 
     # Output arguments
     p.add_argument('--qr',
-                   help="Output the configuration as a QRcode instead of stdout",
+                   help="Outputs the configuration as a QRcode instead of stdout",
                    action='store_const',
                    const=True, default=False)
 
     # Add to peer
     p.add_argument('--auto-add',
-                   help="Execute 'wg set [WG_INTERFACE] [PUBKEY] allowd-ips [ALLOWED_IPS]' with the generated data",
+                   help="Executes 'wg set [WG_INTERFACE] [PUBKEY] allowd-ips [ALLOWED_IPS]' with the generated data",
                    action='store_const',
                    const=True, default=False)
     return p.parse_args()
