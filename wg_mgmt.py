@@ -35,7 +35,7 @@ def first_available_ip_from_subnet(args: object):
         # Grab the first free ivp4 address
         for ip in host_list[4].hosts():
             if ip != host_list[4][0] and ip != host_list[4][1]:
-                if ip not in taken_host_list[4]:
+                if 4 not in taken_host_list or ip not in taken_host_list[4]:
                     result.append(str(ipaddress.ip_network(ip, strict=True)))
                     break
 
@@ -43,7 +43,7 @@ def first_available_ip_from_subnet(args: object):
         # Grab the first free ivp6 address
         for ip in host_list[6].hosts():
             if ip != host_list[6][0] and ip != host_list[6][1]:
-                if ip not in taken_host_list[6]:
+                if 6 not in taken_host_list or ip not in taken_host_list[6]:
                     result.append(str(ipaddress.ip_network(ip, strict=True)))
                     break
 
@@ -54,6 +54,13 @@ def get_public_key(args: object, privkey: str):
     pipe = subprocess.Popen(["echo", privkey], stdout=subprocess.PIPE)
     pubkey = subprocess.check_output(
         [args.wg_binary, "pubkey"], stdin=pipe.stdout)
+    pubkey_cleaned = pubkey.decode("utf-8").strip()
+    return pubkey_cleaned
+
+
+def get_server_public_key(args: object):
+    pubkey = subprocess.check_output(
+        [args.wg_binary, "show", args.wg_interface, 'public-key'])
     pubkey_cleaned = pubkey.decode("utf-8").strip()
     return pubkey_cleaned
 
@@ -122,7 +129,7 @@ def parse_args() -> object:
     return p.parse_args()
 
 
-def generate_configuration(args, privkey, pubkey, interface_address) -> str:
+def generate_configuration(args, privkey, interface_address, server_pubkey) -> str:
     config = configparser.ConfigParser()
     config.optionxform = str
 
@@ -135,7 +142,7 @@ def generate_configuration(args, privkey, pubkey, interface_address) -> str:
         config.set('Interface', 'MTU', args.mtu)
 
     config.add_section('Peer')
-    config.set('Peer', 'PublicKey', pubkey)
+    config.set('Peer', 'PublicKey', server_pubkey)
     config.set('Peer', 'Endpoint', args.endpoint)
     config.set('Peer', 'AllowedIPs', args.allowed_ips)
 
@@ -162,6 +169,7 @@ def main():
     privkey = get_private_key(args)
     pubkey = get_public_key(args, privkey)
     interface_address = args.address
+    server_pubkey = get_server_public_key(args)
 
     if args.subnet is not None:
         interface_address = first_available_ip_from_subnet(args)
@@ -176,8 +184,8 @@ def main():
     config = generate_configuration(
         args,
         privkey=privkey,
-        pubkey=pubkey,
-        interface_address=interface_address
+        interface_address=interface_address,
+        server_pubkey=server_pubkey
     )
 
     if args.qr:
